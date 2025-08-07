@@ -34,6 +34,7 @@ PORTFOLIO RISK METRICS (HISTORICAL)
 | Historical CVaR (95%) | -1.78% |
 
 | Parametric CVaR (95%) | -1.62% |
+
 ==================================================
 
 ## 🛠️ Usage
