@@ -1,6 +1,6 @@
 # Portfolio Risk Calculator
 
-📊 A Python tool to calculate **historical risk metrics** for a real-world, diversified n-asset portfolio (n+5 in this case).
+📊 A Python tool to calculate **historical risk metrics** for a real-world, diversified n-asset portfolio (n = 5 in this case).
 
 ## 🔍 Real-World Case: N-Asset Equally Weighted Portfolio
 - **SPY**: S&P 500 ETF (US equities)
