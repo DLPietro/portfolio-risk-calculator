@@ -17,6 +17,7 @@ All assets weighted at **20%** — a simple, robust, globally diversified strate
 - Sharpe Ratio (2% risk-free rate)
 - Maximum Drawdown
 - Historical CVaR (95%)
+- Parametric CVaR (95%)
 
 ## 📈 Example Output
 ==================================================
