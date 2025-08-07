@@ -1,26 +1,32 @@
 # Portfolio Risk Calculator
 
-📊 A Python tool to calculate **historical risk metrics** for financial portfolios, inspired by my Master's thesis on S&P 500, IVV, and Fidelity Contrafund.
+📊 A Python tool to calculate **historical risk metrics** for a real-world, diversified 5-asset portfolio.
 
-## 🔍 Features
-- Downloads real ETF data using `yfinance`
-- Calculates key risk/return metrics:
-  - Annualized Return
-  - Volatility
-  - Sharpe Ratio
-  - Maximum Drawdown
-  - Historical CVaR (95%)
-- Fully replicable and open-source
+## 🔍 Real-World Case: 5-Asset Equally Weighted Portfolio
+- **SPY**: US Large-Cap Stocks (S&P 500)
+- **AGG**: US Aggregate Bonds
+- **GLD**: Gold (Commodity)
+- **FXE**: Euro (Forex)
+- **EEM**: Emerging Markets Equity
+
+All assets weighted at **20%** — a simple, robust, globally diversified strategy.
+
+## 📈 Key Metrics Calculated
+- Annualized Return
+- Volatility (Standard Deviation)
+- Sharpe Ratio (2% risk-free rate)
+- Maximum Drawdown
+- Historical CVaR (95%)
 
 ## 📈 Example Output
 ==================================================
 PORTFOLIO RISK METRICS (HISTORICAL)
 ==================================================
-Annualized Return         10.80%
-Volatility                13.50%
-Sharpe Ratio              0.65
-Max Drawdown              -34.20%
-Historical CVaR (95%)     -2.10%
+Annualized Return         6.82%
+Volatility                10.45%
+Sharpe Ratio              0.46
+Max Drawdown              -18.32%
+Historical CVaR (95%)     -1.78%
 ==================================================
 
 ## 🛠️ Usage
