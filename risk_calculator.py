@@ -1,6 +1,8 @@
 # risk_calculator.py
 # Portfolio Risk Calculator
+# Uses models/ and outputs to figures/
 
+# Libraries used for the script: matplotlib, pandas, numpy & yfinance
 pip install yfinance pandas numpy matplotlib
 import yfinance as yf
 import pandas as pd
@@ -25,10 +27,33 @@ DAYS_PER_YEAR = 252
 # DOWNLOAD DATA
 # =======================
 def download_data(tickers, period="5y"):
+    """Download adjusted closing prices for tickers"""    
     data = yf.download(tickers, period=period)["Adj Close"].ffill().dropna()    # Download adjusted closing prices for tickers for a y=5 period
     returns = data.pct_change().dropna()                                        # Forward-fill & drop remaining NaNs
     print(f"Downloaded {len(returns)} days of data")                            # Show daily returns
     return returns                                                              # Calculate daily returns
+
+# =======================
+# PORTFOLIO METRICS FUNCTION
+# =======================
+def portfolio_metrics(weights, returns, rf=0.02):
+    """
+    Calculate all risk-return metrics for a portfolio
+    """
+    # Calculate portfolio daily returns
+    port_rets = (returns * weights).sum(axis=1)
+    
+    # Compute metrics
+    metrics = {
+        "Annualized Return": f"{annualized_return(port_rets):.2%}",
+        "Volatility": f"{annualized_volatility(port_rets):.2%}",
+        "EWMA Volatility (λ=0.94)": f"{ewma_volatility(port_rets):.2%}",
+        "Sharpe Ratio": f"{sharpe_ratio(port_rets, rf):.2f}",
+        "Max Drawdown": f"{max_drawdown(port_rets):.2%}",
+        "Historical CVaR (95%)": f"{historical_cvar(port_rets, CONFIDENCE_LEVEL):.2%}",
+        "Parametric CVaR (95%)": f"{parametric_cvar(port_rets, CONFIDENCE_LEVEL):.2%}"
+    }
+    return metrics, port_rets
 
 # =======================
 # MAIN EXECUTION
@@ -37,25 +62,15 @@ if __name__ == "__main__":
     # Download data
     returns = download_data(TICKERS)
     
-    # Select portfolio returns
-    port_rets = (returns * WEIGHTS).sum(axis=1)
-    
-    # Calculate metrics
-    metrics = {
-        "Annualized Return": f"{annualized_return(port_rets):.2%}",
-        "Volatility": f"{annualized_volatility(port_rets):.2%}",
-        "Sharpe Ratio": f"{sharpe_ratio(port_rets, RISK_FREE_RATE):.2f}",
-        "Max Drawdown": f"{max_drawdown(port_rets):.2%}",
-        "Historical CVaR (95%)": f"{historical_cvar(port_rets, CONFIDENCE_LEVEL):.2%}",
-        "Parametric CVaR (95%)": f"{parametric_cvar(port_rets, CONFIDENCE_LEVEL):.2%}"
-    }
+    # Calculate portfolio returns
+    metrics, port_rets = portfolio_metrics(WEIGHTS, returns, RISK_FREE_RATE)
     
     # Print results
     print("\n" + "="*60)
     print("PORTFOLIO RISK METRICS (5-ASSET DIVERSIFIED)")
     print("="*60)
-    for k, v in metrics.items():
-        print(f"{k:25} {v}")
+    for key, value in metrics.items():
+        print(f"{key:25} {value}")
     print("="*60)
     
     # Save results to output/results_summary.md
@@ -74,7 +89,7 @@ if __name__ == "__main__":
         for k, v in metrics.items():
             f.write(f"| {k} | {v} |\n")
             
-    # Plot and save figure
+    # Step 5: Plot cumulative returns and save the file
     (1 + port_rets).cumprod().plot(title="Cumulative Returns: 5-Asset Portfolio", figsize=(10, 6))
     plt.ylabel("Growth of $1")
     plt.xlabel("Date")
