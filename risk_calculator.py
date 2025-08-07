@@ -1,7 +1,7 @@
 # risk_calculator.py
 # Portfolio Risk Calculator - Model 1: Historical Risk Metrics
-# Based on empirical analysis from thesis (D.L. Pietro)
 
+pip install yfinance pandas numpy matplotlib
 import yfinance as yf
 import pandas as pd
 import numpy as np
