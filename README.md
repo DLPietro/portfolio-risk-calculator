@@ -1,8 +1,8 @@
 # Portfolio Risk Calculator
 
-📊 A Python tool to calculate **historical risk metrics** for a real-world, diversified 5-asset portfolio.
+📊 A Python tool to calculate **historical risk metrics** for a real-world, diversified n-asset portfolio (n+5 in this case).
 
-## 🔍 Real-World Case: 5-Asset Equally Weighted Portfolio
+## 🔍 Real-World Case: N-Asset Equally Weighted Portfolio
 - **SPY**: S&P 500 ETF (US equities)
 - **AGG**: iShares Core U.S. Aggregate Bond ETF (broad bond market)
 - **GLD**: SPDR Gold Trust (inflation hedge, low equity correlation)
@@ -27,6 +27,7 @@ Volatility                10.45%
 Sharpe Ratio              0.46
 Max Drawdown              -18.32%
 Historical CVaR (95%)     -1.78%
+Parametric CVaR (95%)     -1.62%
 ==================================================
 
 ## 🛠️ Usage
