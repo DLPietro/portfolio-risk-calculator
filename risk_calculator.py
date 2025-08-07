@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 # =======================
 # CONFIGURATION
 # =======================
-TICKERS = ["IVV", "FCNTX", "^GSPC"]  # Can be extended
-WEIGHTS = [0.6, 0.4, 0.0]           # Portfolio weights (IVV 60%, FCNTX 40%)
+TICKERS = ["SPY", "AGG", "GLD", "FXE", "EEM"]  # Sample of 5 different assets
+WEIGHTS = [0.6, 0.4, 0.0]           # Portfolio weights (20% per Asset)
 RISK_FREE_RATE = 0.02               # 2% annual risk-free rate
 CONFIDENCE_LEVEL = 0.95             # For CVaR
 DAYS_PER_YEAR = 252
@@ -22,7 +22,13 @@ DAYS_PER_YEAR = 252
 def download_data(tickers, period="5y"):
     """Download adjusted closing prices for tickers"""
     data = yf.download(tickers, period=period)["Adj Close"]
+    
+    # Forward-fill & drop remaining NaNs
+    data = data.ffill().dropna()
+    
+    # Calculate daily returns
     returns = data.pct_change().dropna()
+    
     print(f"Downloaded {len(returns)} days of data for {tickers}")
     return returns
 
@@ -67,29 +73,48 @@ def portfolio_metrics(weights, returns, rf=0.02):
     return metrics, portfolio_returns
 
 # =======================
+# INDIVIDUAL ASSET ANALYSIS
+# =======================
+def display_asset_metrics(returns, weights):
+    print("\n" + "="*60)
+    print("INDIVIDUAL ASSET METRICS")
+    print("="*60)
+    print(f"{'Asset':<8} {'Weight':<10} {'Return':<12} {'Volatility':<12} {'Sharpe':<10}")
+    print("-"*60)
+        
+    for i, ticker in enumerate(returns.columns):
+        r = annualized_return(returns[ticker])
+        vol = annualized_volatility(returns[ticker])
+        sr = (r - RISK_FREE_RATE) / vol if vol != 0 else 0
+        w = f"{weights[i]:.0%}"
+        print(f"{ticker:<8} {w:<10} {r:.2%}{'':<2} {vol:.2%}{'':<2} {sr:.2f}")
+    print("-"*60)
+
+# =======================
 # MAIN EXECUTION
 # =======================
 if __name__ == "__main__":
     # Download data
     returns = download_data(TICKERS)
     
-    # Select only IVV and FCNTX for portfolio
-    portfolio_returns_df = returns[["IVV", "FCNTX"]]
-    
-    # Calculate metrics
-    metrics, portfolio_rets = portfolio_metrics(WEIGHTS[:2], portfolio_returns_df, RISK_FREE_RATE)
+    # Calculate portfolio metrics
+    metrics, portfolio_rets = portfolio_metrics(WEIGHTS, returns, RISK_FREE_RATE)
     
     # Display results
-    print("\n" + "="*50)
-    print("PORTFOLIO RISK METRICS (HISTORICAL)")
-    print("="*50)
+    print("\n" + "="*60)
+    print("PORTFOLIO RISK METRICS (HISTORICAL) - 5-ASSET DIVERSIFIED")
+    print("="*60)
     for key, value in metrics.items():
         print(f"{key:25} {value}")
-    print("="*50)
+    print("="*60)
+        
+    # Show individual asset metrics
+    display_asset_metrics(returns, WEIGHTS)
     
-    # Optional: Plot cumulative returns
-    (1 + portfolio_rets).cumprod().plot(title="Portfolio Cumulative Returns")
+    # Plot cumulative returns
+    (1 + portfolio_rets).cumprod().plot(title="Cumulative Returns: 5-Asset Portfolio", figsize=(10, 6))
     plt.ylabel("Growth of $1")
     plt.xlabel("Date")
-    plt.grid(True)
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
     plt.show()
