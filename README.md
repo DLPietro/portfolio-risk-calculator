@@ -2,14 +2,14 @@
 
 📊 A Python tool to calculate **historical risk metrics** for a real-world, diversified n-asset portfolio (n = 5 in this case).
 
-## 🔍 Real-World Case: N-Asset Equally Weighted Portfolio
+## 🔍 Portfolio Example: N-Asset Equally Weighted Portfolio
 - **SPY**: S&P 500 ETF (US equities)
 - **AGG**: iShares Core U.S. Aggregate Bond ETF (broad bond market)
 - **GLD**: SPDR Gold Trust (inflation hedge, low equity correlation)
 - **FXE**: CurrencyShares Euro Trust (exposure to EUR/USD)
 - **EEM**: iShares MSCI Emerging Markets ETF
 
-All assets weighted at **20%** — a simple, robust, globally diversified strategy.
+All assets weighted at **20%** — a simple, robust, globally diversified strategy with uncorrelated assets.
 
 ## 📈 Key Metrics Calculated
 - Annualized Return
