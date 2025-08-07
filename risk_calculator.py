@@ -1,11 +1,15 @@
 # risk_calculator.py
-# Portfolio Risk Calculator - Model 1: Historical Risk Metrics
+# Portfolio Risk Calculator
 
 pip install yfinance pandas numpy matplotlib
 import yfinance as yf
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+
+# Import from models
+from models.historical import *
+from models.parametric import parametric_cvar
 
 # =======================
 # CONFIGURATION
@@ -20,75 +24,10 @@ DAYS_PER_YEAR = 252
 # DOWNLOAD DATA
 # =======================
 def download_data(tickers, period="5y"):
-    """Download adjusted closing prices for tickers"""
-    data = yf.download(tickers, period=period)["Adj Close"]
-    
-    # Forward-fill & drop remaining NaNs
-    data = data.ffill().dropna()
-    
-    # Calculate daily returns
-    returns = data.pct_change().dropna()
-    
-    print(f"Downloaded {len(returns)} days of data for {tickers}")
-    return returns
-
-# =======================
-# RISK METRICS
-# =======================
-def annualized_return(returns):
-    return np.mean(returns) * DAYS_PER_YEAR
-
-def annualized_volatility(returns):
-    return np.std(returns) * np.sqrt(DAYS_PER_YEAR)
-
-def sharpe_ratio(returns, rf=0.02):
-    r = annualized_return(returns)
-    vol = annualized_volatility(returns)
-    return (r - rf) / vol if vol != 0 else 0
-
-def max_drawdown(returns):
-    cumulative = (1 + returns).cumprod()
-    peak = cumulative.expanding().max()
-    drawdown = (cumulative - peak) / peak
-    return drawdown.min()
-
-def historical_cvar(returns, alpha=0.95):
-    sorted_returns = np.sort(returns)
-    index = int((1 - alpha) * len(sorted_returns))
-    return np.mean(sorted_returns[:index]) * np.sqrt(DAYS_PER_YEAR)  # Annualized
-
-# =======================
-# PORTFOLIO CALCULATION
-# =======================
-def portfolio_metrics(weights, returns, rf=0.02):
-    portfolio_returns = (returns * weights).sum(axis=1)
-    
-    metrics = {
-        "Annualized Return": f"{annualized_return(portfolio_returns):.2%}",
-        "Volatility": f"{annualized_volatility(portfolio_returns):.2%}",
-        "Sharpe Ratio": f"{sharpe_ratio(portfolio_returns, rf):.2f}",
-        "Max Drawdown": f"{max_drawdown(portfolio_returns):.2%}",
-        "Historical CVaR (95%)": f"{historical_cvar(portfolio_returns, CONFIDENCE_LEVEL):.2%}"
-    }
-    return metrics, portfolio_returns
-
-# =======================
-# INDIVIDUAL ASSET ANALYSIS
-# =======================
-def display_asset_metrics(returns, weights):
-    print("\n" + "="*60)
-    print("INDIVIDUAL ASSET METRICS")
-    print("="*60)
-    print(f"{'Asset':<8} {'Weight':<10} {'Return':<12} {'Volatility':<12} {'Sharpe':<10}")
-    print("-"*60)
-        
-    for i, ticker in enumerate(returns.columns):
-        r = annualized_return(returns[ticker])
-        vol = annualized_volatility(returns[ticker])
-        sr = (r - RISK_FREE_RATE) / vol if vol != 0 else 0
-        w = f"{weights[i]:.0%}"
-        print(f"{ticker:<8} {w:<10} {r:.2%}{'':<2} {vol:.2%}{'':<2} {sr:.2f}")
-    print("-"*60)
+    data = yf.download(tickers, period=period)["Adj Close"].ffill().dropna()    # Download adjusted closing prices for tickers for a y=5 period
+    returns = data.pct_change().dropna()                                        # Forward-fill & drop remaining NaNs
+    print(f"Downloaded {len(returns)} days of data")                            # Show daily returns
+    return returns                                                              # Calculate daily returns
 
 # =======================
 # MAIN EXECUTION
@@ -97,24 +36,48 @@ if __name__ == "__main__":
     # Download data
     returns = download_data(TICKERS)
     
-    # Calculate portfolio metrics
-    metrics, portfolio_rets = portfolio_metrics(WEIGHTS, returns, RISK_FREE_RATE)
+    # Select portfolio returns
+    port_rets = (returns * WEIGHTS).sum(axis=1)
     
-    # Display results
+    # Calculate metrics
+    metrics = {
+        "Annualized Return": f"{annualized_return(port_rets):.2%}",
+        "Volatility": f"{annualized_volatility(port_rets):.2%}",
+        "Sharpe Ratio": f"{sharpe_ratio(port_rets, RISK_FREE_RATE):.2f}",
+        "Max Drawdown": f"{max_drawdown(port_rets):.2%}",
+        "Historical CVaR (95%)": f"{historical_cvar(port_rets, CONFIDENCE_LEVEL):.2%}",
+        "Parametric CVaR (95%)": f"{parametric_cvar(port_rets, CONFIDENCE_LEVEL):.2%}"
+    }
+    
+    # Print results
     print("\n" + "="*60)
-    print("PORTFOLIO RISK METRICS (HISTORICAL) - 5-ASSET DIVERSIFIED")
+    print("PORTFOLIO RISK METRICS (5-ASSET DIVERSIFIED)")
     print("="*60)
-    for key, value in metrics.items():
-        print(f"{key:25} {value}")
+    for k, v in metrics.items():
+        print(f"{k:25} {v}")
     print("="*60)
-        
-    # Show individual asset metrics
-    display_asset_metrics(returns, WEIGHTS)
     
-    # Plot cumulative returns
-    (1 + portfolio_rets).cumprod().plot(title="Cumulative Returns: 5-Asset Portfolio", figsize=(10, 6))
+    # Save results to output/results_summary.md
+    with open("output/results_summary.md", "w") as f:
+        f.write(f"# Portfolio Risk Analysis Summary\n\n")
+        f.write(f"## 📊 5-Asset Equally Weighted Portfolio\n")
+        f.write(f"- **SPY**: US Large-Cap Stocks\n")
+        f.write(f"- **AGG**: US Aggregate Bonds\n")
+        f.write(f"- **GLD**: Gold (Commodity)\n")
+        f.write(f"- **FXE**: Euro (Forex)\n")
+        f.write(f"- **EEM**: Emerging Markets Equity\n")
+        f.write(f"- **Weights**: 20% each\n\n")
+        f.write(f"## 📈 Key Metrics (5-Year Historical)\n")
+        f.write(f"| Metric | Value |\n")
+        f.write(f"|--------|-------|\n")
+        for k, v in metrics.items():
+            f.write(f"| {k} | {v} |\n")
+            
+    # Plot and save figure
+    (1 + port_rets).cumprod().plot(title="Cumulative Returns: 5-Asset Portfolio", figsize=(10, 6))
     plt.ylabel("Growth of $1")
     plt.xlabel("Date")
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
+    plt.savefig("output/figures/cumulative_returns.png")
     plt.show()
