@@ -27,6 +27,8 @@ PORTFOLIO RISK METRICS (HISTORICAL)
 
 | Volatility | 10.45% |
 
+| EWMA Volatility (λ=0.94) | 11.12% |
+
 | Sharpe Ratio (2% Rf) | 0.46 |
 
 | Max Drawdown | -18.32% |
