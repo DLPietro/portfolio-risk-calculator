@@ -8,8 +8,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Import from models
-from models.historical import *
-from models.parametric import parametric_cvar
+from models.historical import *                # Model 1: Historical Risk Metrics
+from models.parametric import parametric_cvar  # Model 2: Parametric CVaR
+from models.ewma import ewma_volatility        # Model 3: EWMA Volatility
 
 # =======================
 # CONFIGURATION
