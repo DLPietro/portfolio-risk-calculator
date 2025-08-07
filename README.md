@@ -3,11 +3,11 @@
 📊 A Python tool to calculate **historical risk metrics** for a real-world, diversified 5-asset portfolio.
 
 ## 🔍 Real-World Case: 5-Asset Equally Weighted Portfolio
-- **SPY**: US Large-Cap Stocks (S&P 500)
-- **AGG**: US Aggregate Bonds
-- **GLD**: Gold (Commodity)
-- **FXE**: Euro (Forex)
-- **EEM**: Emerging Markets Equity
+- **SPY**: S&P 500 ETF (US equities)
+- **AGG**: iShares Core U.S. Aggregate Bond ETF (broad bond market)
+- **GLD**: SPDR Gold Trust (inflation hedge, low equity correlation)
+- **FXE**: CurrencyShares Euro Trust (exposure to EUR/USD)
+- **EEM**: iShares MSCI Emerging Markets ETF
 
 All assets weighted at **20%** — a simple, robust, globally diversified strategy.
 
