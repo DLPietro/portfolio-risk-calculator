@@ -39,6 +39,17 @@ PORTFOLIO RISK METRICS (HISTORICAL)
 
 ==================================================
 
+==================================================
+MONTE CARLO SIMULATION RESULTS
+==================================================
+
+Expected Final Value      $1,068
+Median Final Value        $1,065
+Probability of Loss       28.45%
+Simulated CVaR (95%)      $782
+
+==================================================
+
 ## 🛠️ Usage
 1. Install dependencies:
    ```bash
