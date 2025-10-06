@@ -1,13 +1,9 @@
-# risk_calculator.py
 # Portfolio Risk Calculator
 # Uses models/ and outputs to figures/
 
-# Libraries used for the script: matplotlib, pandas, numpy & yfinance
-pip install yfinance pandas numpy matplotlib
-import yfinance as yf                        # Data from Yahoo Finance
-import pandas as pd                          # Data manipulation/analysis
-import numpy as np                           # Numerical Operations
-import matplotlib.pyplot as plt              # Plots
+# Step 1: importing libraries
+# pip install yfinance pandas numpy matplotlib
+import yfinance as yf, pandas as pd, numpy as np, matplotlib.pyplot as plt              
 
 # Import from models
 from models.historical import *                # Model 1: Historical Risk Metrics
