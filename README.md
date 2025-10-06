@@ -1,8 +1,18 @@
-# Portfolio Risk Calculator
+# 🧮 Portfolio Risk Calculator
 
-📊 A Python tool to calculate **historical risk metrics** for a real-world, diversified n-asset portfolio (n = 5 in this case).
+A Python tool that calculates key financial risk metrics and performs Monte Carlo simulations for diversified portfolios.
 
-## 🔍 Portfolio Example: N-Asset Equally Weighted Portfolio
+## 💡 Features
+
+>Pulls live market data using _yfinance_
+>
+>Calculates metrics: _Annualized Return, Volatility, Sharpe Ratio, Max Drawdown, CVaR (historical & parametric)_
+>
+>_Monte Carlo Simulation_ to assess probable portfolio outcomes
+
+---
+
+# 🔍 Portfolio Example: N-Asset Equally Weighted Portfolio
 - **SPY**: S&P 500 ETF (US equities)
 - **AGG**: iShares Core U.S. Aggregate Bond ETF (broad bond market)
 - **GLD**: SPDR Gold Trust (inflation hedge, low equity correlation)
@@ -11,17 +21,10 @@
 
 All assets weighted at **20%** — a simple, robust, globally diversified strategy with uncorrelated assets.
 
-## 📈 Key Metrics Calculated
-- Annualized Return
-- Volatility (Standard Deviation)
-- Sharpe Ratio (2% risk-free rate)
-- Maximum Drawdown
-- Historical CVaR (95%)
-- Parametric CVaR (95%)
 
-## 📈 Example Output
+## 📊 Example Output
 
-PORTFOLIO RISK METRICS (HISTORICAL)
+### 📈 Portfolio Risk Metrics (Historical)
 
 | Metric | Value |
 |--------|-------|
@@ -35,7 +38,7 @@ PORTFOLIO RISK METRICS (HISTORICAL)
 
 ---
 
-MONTE CARLO SIMULATION RESULTS
+### 💸 Monte Carlo Simulation Results
 
 >Expected Final Value:      $1,068
 >
@@ -46,7 +49,7 @@ MONTE CARLO SIMULATION RESULTS
 >Simulated CVaR (95%):      $782
 
 
-## 🛠️ Usage
+## 🛠️ How To Install it
 1. Install dependencies:
    ```bash
    pip install yfinance pandas numpy matplotlib
