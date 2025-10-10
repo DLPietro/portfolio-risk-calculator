@@ -8,11 +8,19 @@ A Python tool that calculates key financial risk metrics and performs Monte Carl
 >
 >Calculates metrics: _Annualized Return, Volatility, Sharpe Ratio, Max Drawdown, CVaR (historical & parametric)_
 >
->_Monte Carlo Simulation_ to assess probable portfolio outcomes
+>Performs _Monte Carlo Simulation_ to assess probable portfolio outcomes over a specified time horizon.
 
 ---
 
-# 🔍 Portfolio Example: N-Asset Equally Weighted Portfolio
+## 🚀 Example Usage
+
+To calculate risk metrics for your portfolio, run the following command:
+
+```bash
+python risk_calculator.py --assets "SPY,AGG,GLD,FXE,EEM" --start "2020-01-01" --end "2025-01-01"
+```
+
+# 🚀 Portfolio Example: N-Asset Equally Weighted Portfolio
 - **SPY**: S&P 500 ETF (US equities)
 - **AGG**: iShares Core U.S. Aggregate Bond ETF (broad bond market)
 - **GLD**: SPDR Gold Trust (inflation hedge, low equity correlation)
@@ -53,3 +61,39 @@ All assets weighted at **20%** — a simple, robust, globally diversified strate
 1. Install dependencies:
    ```bash
    pip install yfinance pandas numpy matplotlib
+   ```
+---
+
+## 🧱 Project Structure
+
+```text
+portfolio-risk-calculator/
+├── data/
+│   └── raw/                # Sample Data
+├── models/                 # Calculations: Sharpe, CVaR, Monte Carlo
+│   ├── risk_calculations.py
+│   ├── monte_carlo.py
+├── output/                 # Results: CSV, plots, etc.
+├── LICENSE
+├── README.md
+├── requirements.txt
+└── risk_calculator.py
+```
+
+---
+
+## 🔗 Related Work
+
+- [📊 My Data Journey Blog](https://dlpietro.github.io) — Weekly updates on my upskilling  
+- [🧠 My Learning Roadmap](https://github.com/DLPietro/learning-roadmap) — Publicly tracked progress  
+- [📈 Empirical Analysis: S&P 500 vs IVV vs Fidelity](https://github.com/DLPietro/thesis-backtesting-etf-spx) — Using R, GARCH, backtesting  
+
+---
+
+## ⚡ Credits
+
+[![GitHub](https://img.shields.io/badge/GitHub-DLPietro-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/DLPietro)&nbsp;&nbsp;
+[![Commit Style](https://img.shields.io/badge/Commit_Style-DLPietro-9B59B6?style=for-the-badge&logo=git&logoColor=white)](https://github.com/DLPietro/learning-roadmap/blob/main/CONTRIBUTING.md)&nbsp;&nbsp;
+[![License](https://img.shields.io/badge/License-CC_BY--SA_4.0-007EC7?style=for-the-badge)](https://creativecommons.org/licenses/by-sa/4.0/)
+
+> _© 2025 Pietro Di Leo — From Operations to Data. One Commit at a Time._
