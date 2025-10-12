@@ -1,6 +1,6 @@
-# 🧮 Portfolio Risk Calculator
+# 📃 Portfolio Risk Report
 
-A Python tool that calculates key financial risk metrics and performs Monte Carlo simulations for diversified portfolios.
+A Python tool that calculates and shows key financial risk metrics and portolio performance using several financial methods, Monte Carlo simulation included.
 
 ## 💡 Features
 
@@ -86,14 +86,15 @@ portfolio-risk-calculator/
 
 - [📊 My Data Journey Blog](https://dlpietro.github.io) — Weekly updates on my upskilling  
 - [🧠 My Learning Roadmap](https://github.com/DLPietro/learning-roadmap) — Publicly tracked progress  
-- [📈 Empirical Analysis: S&P 500 vs IVV vs Fidelity](https://github.com/DLPietro/thesis-backtesting-etf-spx) — Using R, GARCH, backtesting  
+- [📈 Empirical Analysis: S&P 500 vs IVV vs Fidelity](https://github.com/DLPietro/thesis-backtesting-etf-spx) — Using R, GARCH, backtesting
+-   
 
 ---
 
 ## ⚡ Credits
 
-[![GitHub](https://img.shields.io/badge/GitHub-DLPietro-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/DLPietro)&nbsp;&nbsp;
-[![Commit Style](https://img.shields.io/badge/Commit_Style-DLPietro-9B59B6?style=for-the-badge&logo=git&logoColor=white)](https://github.com/DLPietro/learning-roadmap/blob/main/CONTRIBUTING.md)&nbsp;&nbsp;
-[![License](https://img.shields.io/badge/License-CC_BY--SA_4.0-007EC7?style=for-the-badge)](https://creativecommons.org/licenses/by-sa/4.0/)
+[![GitHub Profile](https://img.shields.io/badge/GitHub-DLPietro-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/DLPietro)
+[![Email](https://img.shields.io/badge/Email-dileopie-d14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:dileopie@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Pietro-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pietrodileo)
 
 > _© 2025 Pietro Di Leo — From Operations to Data. One Commit at a Time._
