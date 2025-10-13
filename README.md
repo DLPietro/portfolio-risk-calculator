@@ -64,15 +64,19 @@ All assets weighted at **20%** — a simple, robust, globally diversified strate
    ```
 ---
 
-## 🧱 Project Structure
+## 🏡 Project Structure
 
 ```text
 portfolio-risk-calculator/
 ├── data/
 │   └── raw/                # Sample Data
-├── models/                 # Calculations: Sharpe, CVaR, Monte Carlo
-│   ├── risk_calculations.py
+├── models/                 # Calculation Models: Sharpe, CVaR, EWMA, Monte Carlo
+│   ├── bootstrp.py
+│   ├── ewma.py
+│   ├── historical.py
 │   ├── monte_carlo.py
+│   └── parametric.py
+│
 ├── output/                 # Results: CSV, plots, etc.
 ├── LICENSE
 ├── README.md
@@ -87,7 +91,7 @@ portfolio-risk-calculator/
 - [📊 My Data Journey Blog](https://dlpietro.github.io) — Weekly updates on my upskilling  
 - [🧠 My Learning Roadmap](https://github.com/DLPietro/learning-roadmap) — Publicly tracked progress  
 - [📈 Empirical Analysis: S&P 500 vs IVV vs Fidelity](https://github.com/DLPietro/thesis-backtesting-etf-spx) — Using R, GARCH, backtesting
--   
+- [🎲 iGaming Analytics Dashboard](https://github.com/DLPietro/igaming-analytics-case-study) — KPI and players Retention (_Cohort, Church..._)
 
 ---
 
